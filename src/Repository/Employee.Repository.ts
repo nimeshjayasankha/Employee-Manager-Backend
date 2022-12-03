@@ -22,12 +22,12 @@ export default class EmployeeRepository {
     return employee;
   }
 
-  public async getSingleEmployeeDetail(id: string) {
+  public async singleEmployee(id: string) {
     const singleEmployee = Employee.findOne({ _id: id });
     return singleEmployee;
   }
 
-  public async updateSingleEmployee(id: string, data: EmployeeCreation) {
+  public async updateEmployee(id: string, data: EmployeeCreation) {
     const singleEmployee = Employee.updateOne({ _id: id }, data, {
       new: true,
     });

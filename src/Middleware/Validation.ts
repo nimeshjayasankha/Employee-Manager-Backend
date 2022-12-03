@@ -1,5 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
 
+/**
+ * check backend validation before save to the database.
+ */
 const Validation = (schema: any) => {
   return (req: Request, res: Response, next: NextFunction) => {
     const { error } = schema.validate(req.body, {

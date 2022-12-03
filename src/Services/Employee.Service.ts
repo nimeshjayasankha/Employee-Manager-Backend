@@ -5,6 +5,14 @@ import EmployeeRepository from '../Repository/Employee.Repository';
 export default class EmployeeService {
   private employeeRepository: EmployeeRepository = new EmployeeRepository();
 
+  /**
+   * @typedef FilterEmployee
+   * @prop {string} search The search keyword
+   * @prop {string} sort The sort order
+   * @prop {string} searchBy The sort field
+   * @prop {string} sortBy The sort by
+   *
+   */
   public async employeeLists(data: FilterEmployee) {
     try {
       const { search, sort, searchBy, sortBy } = data;
@@ -21,6 +29,16 @@ export default class EmployeeService {
     }
   }
 
+  /**
+   * @typedef EmployeeCreation
+   * @prop {string} first_name The first name
+   * @prop {string} last_name The last name
+   * @prop {string} email The email
+   * @prop {string} number The number
+   * @prop {string} gender The gender
+   * @prop {string} photo The photo
+   *
+   */
   public async createEmployee(data: EmployeeCreation) {
     const session: ClientSession = await mongoose.startSession();
     session.startTransaction();
@@ -39,22 +57,35 @@ export default class EmployeeService {
     }
   }
 
-  public async getSingleEmployeeDetail(id: string) {
+  /**
+   * @param {string} id employee id
+   *
+   */
+  public async singleEmployee(id: string) {
     try {
-      const getSingleEmployeeDetail =
-        await this.employeeRepository.getSingleEmployeeDetail(id);
-      return getSingleEmployeeDetail;
+      const singleEmployee = await this.employeeRepository.singleEmployee(id);
+      return singleEmployee;
     } catch (error) {
       console.log(error);
       throw error;
     }
   }
 
-  public async updateSingleEmployee(id: string, data: EmployeeCreation) {
+  /**
+   * @prop {string} id Employee id
+   * @typedef EmployeeCreation
+   * @prop {string} first_name The first name
+   * @prop {string} last_name The last name
+   * @prop {string} email The email
+   * @prop {string} number The number
+   * @prop {string} gender The gender
+   * @prop {string} photo The photo
+   */
+  public async updateEmployee(id: string, data: EmployeeCreation) {
     const session: ClientSession = await mongoose.startSession();
     session.startTransaction();
     try {
-      const updateEmployee = await this.employeeRepository.updateSingleEmployee(
+      const updateEmployee = await this.employeeRepository.updateEmployee(
         id,
         this.employeePayload(data)
       );
@@ -69,6 +100,10 @@ export default class EmployeeService {
     }
   }
 
+  /**
+   * @param {string} id employee id
+   *
+   */
   public async deleteEmployee(id: string) {
     const session: ClientSession = await mongoose.startSession();
     session.startTransaction();
@@ -84,6 +119,16 @@ export default class EmployeeService {
     }
   }
 
+  /**
+   * format employee creation payload in better way
+   * @typedef EmployeeCreation
+   * @prop {string} first_name The first name
+   * @prop {string} last_name The last name
+   * @prop {string} email The email
+   * @prop {string} number The number
+   * @prop {string} gender The gender
+   * @prop {string} photo The photo
+   */
   employeePayload = (data: EmployeeCreation) => {
     return {
       first_name: data.first_name,

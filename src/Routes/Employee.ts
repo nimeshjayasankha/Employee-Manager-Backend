@@ -7,18 +7,23 @@ const employeeRoutes = express.Router();
 const employeeController = new EmployeeController();
 
 employeeRoutes.get('/', employeeController.employeeLists);
+/**
+ * validate the data before passing to the controller
+ */
 employeeRoutes.post(
   '/',
   Validation(EmployeeSchema),
   employeeController.createEmployee
 );
-employeeRoutes.get('/:id', employeeController.getSingleEmployeeDetail);
+employeeRoutes.get('/:id', employeeController.singleEmployee);
+/**
+ * validate the data before passing to the controller
+ */
 employeeRoutes.put(
   '/:empId',
   Validation(EmployeeSchema),
-  employeeController.updateSingleEmployee
+  employeeController.updateEmployee
 );
 employeeRoutes.delete('/:empId', employeeController.deleteEmployee);
-
 
 export default employeeRoutes;
