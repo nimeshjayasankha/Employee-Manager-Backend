@@ -100,7 +100,6 @@ export default class EmployeeController {
         return res.status(404).json(response(404, 'Employee id not found', []));
       }
       await this.employeeService.updateEmployee(employeeId, req.body);
-      console.info('Successfully updated the employee by given id');
       return res
         .status(201)
         .json(response(201, 'Successfully updated the employee', []));
