@@ -1,4 +1,4 @@
-import mongoose, { ClientSession, mongo } from 'mongoose';
+import mongoose, { ClientSession } from 'mongoose';
 import { EmployeeCreation, FilterEmployee } from '../DTO/Employee.dto';
 import EmployeeRepository from '../Repository/Employee.Repository';
 

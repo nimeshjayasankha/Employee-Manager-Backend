@@ -20,10 +20,9 @@ export default class EmployeeController {
    * @return {object} is for return employee lists
    */
   public async employeeLists(req: Request, res: Response, next: NextFunction) {
-    console.info('called employee lists endpoint');
+    console.info('employee lists endpoint');
     try {
       const employeeLists = await this.employeeService.employeeLists(req.query);
-      console.info('Successfully get employee list');
       return res
         .status(200)
         .json(response(200, 'Employee lists', employeeLists));
@@ -42,9 +41,8 @@ export default class EmployeeController {
    */
   public async createEmployee(req: Request, res: Response, next: NextFunction) {
     try {
-      console.info('called create employee endpoint');
+      console.info('create employee endpoint');
       const employee = await this.employeeService.createEmployee(req.body);
-      console.info('Successfully created employee by given data');
       return res
         .status(201)
         .json(response(201, 'Successfully created employee', employee));
@@ -64,7 +62,7 @@ export default class EmployeeController {
    */
   public async singleEmployee(req: Request, res: Response, next: NextFunction) {
     try {
-      console.info('called single employee detail endpoint');
+      console.info('single employee detail endpoint');
       const employeeId = req.params.id;
       const singleEmployee = await this.employeeService.singleEmployee(
         employeeId
@@ -72,7 +70,6 @@ export default class EmployeeController {
       if (!singleEmployee) {
         return res.status(404).json(response(404, 'Employee id not found', []));
       }
-      console.info('Successfully get employee detail by given id');
       return res
         .status(201)
         .json(response(201, 'Single employee', singleEmployee));
@@ -84,7 +81,7 @@ export default class EmployeeController {
 
   /**
    * update employee detail using given id and data
-   * before update the record we check id exists or not in the db
+   * before update the record we checked id exists or not in the db
    * if id is exists user can update the record
    * @param req
    * @param res
@@ -94,7 +91,7 @@ export default class EmployeeController {
 
   public async updateEmployee(req: Request, res: Response, next: NextFunction) {
     try {
-      console.info('called update an employee endpoint');
+      console.info('update employee endpoint');
       const employeeId = req.params.empId;
       const singleEmployee = await this.employeeService.singleEmployee(
         employeeId
@@ -121,17 +118,15 @@ export default class EmployeeController {
    */
   public async deleteEmployee(req: Request, res: Response, next: NextFunction) {
     try {
-      console.info('called delete employee endpoint');
+      console.info('delete employee endpoint');
       const employeeId = req.params.empId;
       const singleEmployee = await this.employeeService.singleEmployee(
         employeeId
       );
-
       if (!singleEmployee) {
         return res.status(404).json(response(404, 'Employee id not found', []));
       }
       await this.employeeService.deleteEmployee(employeeId);
-      console.info('Successfully deleted the employee by given id');
       return res
         .status(201)
         .json(
